@@ -1,21 +1,14 @@
-#! /usr/bin/env python3
-# coding: utf-8
-# pylint: disable=C0301, R0201
+"""Vigenere cipher — polyalphabetic substitution using a repeating keyword."""
 
-
-"""All imports"""
-
-
-from useful import useful
-
-
-"""
-Part IV : Vigenere
-"""
+from .utils import useful
 
 
 class Vigenere:
-    """Class made to bring together the functions needed to encrypt and decrypt with Vigenere method"""
+    """Encrypt and decrypt text using the Vigenere polyalphabetic cipher.
+
+    Uses a repeating keyword to shift each character by a varying amount,
+    making simple frequency analysis ineffective.
+    """
 
     def __init__(self):
 
@@ -33,7 +26,7 @@ class Vigenere:
             print("https://en.wikipedia.org/wiki/Vigenere_ciphers")
 
     def encrypt_vigenere(self):
-        """This function encrypt a text by Vigenere method"""
+        """Encrypt text by adding letter positions of the plaintext and keyword."""
 
         text = ""
         key = ""
@@ -58,7 +51,7 @@ class Vigenere:
         print("Encrypted text :", useful.color(text=encrypted_text, color="red"))
 
     def decrypt_vigenere(self):
-        """This function decrypt a text by Vigenere method"""
+        """Decrypt Vigenere-encrypted text by subtracting the keyword positions."""
 
         text = ""
         key = ""

@@ -1,46 +1,36 @@
-#! /usr/bin/env python3
-# coding: utf-8
-# pylint: disable=C0301
-
-
-"""All imports"""
-
+"""Interactive command-line interface for selecting and running cipher modules."""
 
 from time import sleep
 from sys import exit as sys_exit
-from useful import useful
-from ceasar import Ceasar
-from transposition import Transposition
-from substitution import Substitution
-from vigenere import Vigenere
-from onetimepad import OneTimePad
-from hash import Hash
-from rsa import Rsa
 
-
-"""
-Final part : Menu
-"""
+from .utils import useful
+from .caesar import Caesar
+from .transposition import Transposition
+from .substitution import Substitution
+from .vigenere import Vigenere
+from .one_time_pad import OneTimePad
+from .hashing import Hash
+from .rsa import RSA
 
 
 def main():
-    """Helps the user to employ this Python script"""
+    """Launch the interactive menu for choosing a cryptographic method."""
 
     while True:
         user_choice = useful.choice(
             to_print=useful.color(text="\nWhich encryption method do you want to use ?", style="bright"),
             choices_values={
-                1: "Ceasar",
+                1: "Caesar",
                 2: "Transposition",
                 3: "Substitution",
                 4: "Vigenere",
                 5: "One-time Pad",
                 6: "Hash",
-                7: "Rsa",
+                7: "RSA",
                 8: "Credits",
                 9: "Exit"})
         if user_choice == 1:
-            Ceasar()
+            Caesar()
         elif user_choice == 2:
             Transposition()
         elif user_choice == 3:
@@ -52,7 +42,7 @@ def main():
         elif user_choice == 6:
             Hash()
         elif user_choice == 7:
-            Rsa()
+            RSA()
         elif user_choice == 8:
             print("\n\t\t\t", useful.color(text="Sources :", color="red"),
                   "\n-", useful.color(text="\"Histoire des Codes Secrets\"", color="green"), "from",
@@ -93,8 +83,6 @@ if __name__ == "__main__":
     try:
         main()
 
-    # pylint: disable=W0702
-    except:
+    except KeyboardInterrupt:
         print("")
-        print("\n! An error ocurred !")
-    # pylint: enable=W0702
+        print("\n! Program interrupted !")

@@ -1,39 +1,32 @@
-#! /usr/bin/env python3
-# coding: utf-8
-# pylint: disable=C0301, R0201
+"""Caesar cipher — encrypt and decrypt using a fixed-shift substitution."""
+
+from .utils import useful
 
 
-"""All imports"""
+class Caesar:
+    """Encrypt and decrypt text using the Caesar (shift) cipher.
 
-
-from useful import useful
-
-
-"""
-Part I : Ceasar
-"""
-
-
-class Ceasar:
-    """Class made to bring together the functions needed to encrypt and decrypt with Ceasar method"""
+    Supports encryption with a known key, decryption with a known key,
+    and brute-force decryption aided by dictionary-based language detection.
+    """
 
     def __init__(self):
 
         self.choice = useful.choice(
-            to_print=useful.color(text="\nWhat do you want to do with the Ceasar cipher ?", style="bright"),
+            to_print=useful.color(text="\nWhat do you want to do with the Caesar cipher ?", style="bright"),
             choices_values={
                 1: "Encrypt",
                 2: "Decrypt",
                 3: "Show documentation"})
         if self.choice == 1:
-            print("Encrypted text :", useful.color(text=self.encrypt_ceasar(), color="red"))
+            print("Encrypted text :", useful.color(text=self.encrypt_caesar(), color="red"))
         elif self.choice == 2:
-            self.decrypt_ceasar()
+            self.decrypt_caesar()
         else:
             print("https://en.wikipedia.org/wiki/Caesar%27s_cipher")
 
-    def encrypt_ceasar(self, key=None, sentence=None):
-        """This function encrypt a text using the ceasar method"""
+    def encrypt_caesar(self, key=None, sentence=None):
+        """Encrypt a plaintext sentence by shifting each letter by *key* positions."""
 
         encrypted_sentence = ""
 
@@ -64,8 +57,8 @@ class Ceasar:
 
         return encrypted_sentence
 
-    def decrypt_ceasar(self):
-        """This function decrypt a text encrypted by the ceasar method"""
+    def decrypt_caesar(self):
+        """Decrypt Caesar-encrypted text, optionally brute-forcing all 25 shifts."""
 
         encrypted_text = input(useful.color(text="Enter the encrypted text :\n", style="bright", is_input=True))
         other_key = useful.choice(to_print=useful.color(text="Do you know the key ?", style="bright"),
@@ -74,7 +67,7 @@ class Ceasar:
                                       2: "No"})
 
         if other_key == 1:
-            print(useful.color(text=self.encrypt_ceasar(
+            print(useful.color(text=self.encrypt_caesar(
                 key=26 - (useful.choice(to_print=useful.color(text="What is the key ? ", style="bright")) % 26),
                 sentence=encrypted_text), color="red"))
 
@@ -92,7 +85,7 @@ class Ceasar:
             for language_chosen in languages_choosed:
                 [list_options.append(possibility) for possibility in
                  useful.see_if_language(
-                     encrypted_sentences=[(self.encrypt_ceasar(key=shift, sentence=encrypted_text), shift) for shift
+                     encrypted_sentences=[(self.encrypt_caesar(key=shift, sentence=encrypted_text), shift) for shift
                                           in range(1, 26)], language=useful.language_choices[language_chosen])]
 
             # If we found some possible sentences
@@ -107,5 +100,5 @@ class Ceasar:
                 print("\n" + useful.color(text="No language found : Brute-Force :", style="bright"))
                 for other_key in range(1, 26):
                     print(
-                        useful.color(text=self.encrypt_ceasar(key=other_key, sentence=encrypted_text), color="red"),
+                        useful.color(text=self.encrypt_caesar(key=other_key, sentence=encrypted_text), color="red"),
                         "with key", useful.color(text=str(26 - other_key), color="red"))

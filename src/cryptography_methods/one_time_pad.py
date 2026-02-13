@@ -1,23 +1,17 @@
-#! /usr/bin/env python3
-# coding: utf-8
-# pylint: disable=C0301, R0201
-
-
-"""All imports"""
-
+"""One-Time Pad cipher — encrypt and decrypt using XOR with a random binary key."""
 
 from time import sleep
 from random import SystemRandom
-from useful import useful
 
-
-"""
-Part V : One-Time Pad
-"""
+from .utils import useful
 
 
 class OneTimePad:
-    """Class made to bring together the functions needed to encrypt and decrypt with One-time Pad method"""
+    """Encrypt and decrypt text using the One-Time Pad (XOR) method.
+
+    Provides theoretically unbreakable encryption when the key is truly
+    random, as long as the plaintext, and never reused.
+    """
 
     def __init__(self):
 
@@ -37,7 +31,7 @@ class OneTimePad:
             print("https://en.wikipedia.org/wiki/One-time_pad")
 
     def encrypt_one_time_pad(self, key=None, text=None):
-        """"This function encrypt a text by the XOR method"""
+        """Encrypt text by XOR-ing its binary form with a binary key."""
 
         iterator = 0
         encrypted_text = ""
@@ -79,7 +73,7 @@ class OneTimePad:
         return encrypted_text
 
     def decrypt_one_time_pad(self):
-        """This function decrypt a text encrypted by XOR method"""
+        """Decrypt OTP-encrypted text by re-applying XOR with the same key."""
 
         text = input(useful.color(text="Enter the encrypted text :\n", style="bright", is_input=True))
         text = useful.to_binary(text=text)

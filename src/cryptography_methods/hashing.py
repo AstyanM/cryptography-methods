@@ -1,25 +1,19 @@
-#! /usr/bin/env python3
-# coding: utf-8
-# pylint: disable=C0301, R0201
-
-
-"""All imports"""
-
+"""Hashing — compute and brute-force reverse cryptographic hash digests."""
 
 from time import time
 from itertools import product
 from hashlib import blake2b, md5, sha3_512, sha512, sha256
 from string import ascii_lowercase, ascii_uppercase, ascii_letters, digits, printable
-from useful import useful
 
-
-"""
-Part VI : Hash
-"""
+from .utils import useful
 
 
 class Hash:
-    """Class made to bring together the functions needed to encrypt and decrypt by using Hashing method"""
+    """Hash text with multiple algorithms and attempt brute-force reversal.
+
+    Supported algorithms: SHA-256, SHA-512, SHA3-512, MD5, BLAKE2b.
+    Reversal supports both dictionary attacks and character-set brute-force.
+    """
 
     def __init__(self):
 
@@ -41,7 +35,7 @@ class Hash:
             print("https://en.wikipedia.org/wiki/Hash_function")
 
     def encrypt_hash(self, to_crypt=None):
-        """"Made to encrypt a text by the SHA-256 method"""
+        """Compute the hash digest of a given text using the selected algorithm."""
 
         if to_crypt:
             if to_crypt[0] == "SHA256":
@@ -80,7 +74,7 @@ class Hash:
               useful.color(text=str(hashed_password), color="red"))
 
     def decrypt_hash(self):
-        """"Made to decrypt with brute-force a text encrypted by the SHA-256 method"""
+        """Attempt to reverse a hash digest via dictionary or brute-force attack."""
 
         counter = 0
 

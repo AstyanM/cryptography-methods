@@ -1,22 +1,16 @@
-#! /usr/bin/env python3
-# coding: utf-8
-# pylint: disable=C0301, R0201
-
-
-"""All imports"""
-
+"""Transposition cipher — encrypt and decrypt by rearranging character positions."""
 
 from math import ceil
-from useful import useful
 
-
-"""
-Part II : Transposition
-"""
+from .utils import useful
 
 
 class Transposition:
-    """Class made to bring together the functions needed to encrypt and decrypt with Transposition method"""
+    """Encrypt and decrypt text using a columnar transposition cipher.
+
+    Supports encryption with a numeric key and brute-force decryption
+    aided by dictionary-based language detection.
+    """
 
     def __init__(self):
 
@@ -34,7 +28,7 @@ class Transposition:
             print("https://en.wikipedia.org/wiki/Transposition_cipher")
 
     def encrypt_transposition(self):
-        """This function encrypt a text by the transposition method"""
+        """Encrypt plaintext by writing it into columns and reading off by rows."""
 
         #  If the user have to fill some informations
         text = input(useful.color(text="Enter the text to encrypt :\n", style="bright", is_input=True))
@@ -60,7 +54,7 @@ class Transposition:
         print("Encrypted text :", useful.color(text=encrypted_text, color="red"))
 
     def decrypt_transposition(self):
-        """This function decrypt a text encrypted by the transposition method"""
+        """Brute-force all possible transposition keys and filter with language detection."""
 
         possibilities = []
         encrypted_text = input(useful.color(text="Enter the encrypted text :\n", style="bright", is_input=True))

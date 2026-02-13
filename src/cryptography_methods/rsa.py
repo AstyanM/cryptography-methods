@@ -1,30 +1,24 @@
-#! /usr/bin/env python3
-# coding: utf-8
-# pylint: disable=C0301, R0201
-
-
-"""All imports"""
-
+"""RSA cipher — asymmetric encryption with prime-number key generation."""
 
 from random import SystemRandom
 from time import time
-from useful import useful
+
+from .utils import useful
 
 
-"""
-Part VII : RSA
-"""
+class RSA:
+    """Encrypt and decrypt messages using the RSA public-key cryptosystem.
 
-
-class Rsa:
-    """Class made to bring together the functions needed to encrypt and decrypt with RSA method"""
+    Includes Miller-Rabin primality testing for key generation,
+    the extended Euclidean algorithm, and modular exponentiation.
+    """
 
     def __init__(self):
 
         self.system_random = SystemRandom()
 
         self.choice = useful.choice(
-            to_print=useful.color(text="\nWhat do you want to do with the Rsa cipher ?", style="bright"),
+            to_print=useful.color(text="\nWhat do you want to do with the RSA cipher ?", style="bright"),
             choices_values={
                 1: "Encrypt",
                 2: "Decrypt",
@@ -37,7 +31,7 @@ class Rsa:
             print("https://en.wikipedia.org/wiki/RSA_cipher")
 
     def witness_test(self, number, aleatory):
-        """Function that return the possible primality of a number according to the witness tess"""
+        """Return whether *aleatory* is a Miller-Rabin witness for the compositeness of *number*."""
 
         new_number = number - 1
         exponent = 0
@@ -56,7 +50,7 @@ class Rsa:
         return True
 
     def miller_rabin(self, number):
-        """Function that generate supposed prime numbers"""
+        """Find a probable prime >= *number* using the Miller-Rabin primality test."""
 
         k = 28
         f_time = time()
@@ -76,7 +70,7 @@ class Rsa:
                     my_number += 2
 
     def create_prime_numbers(self, num_bits):
-        """Function that is synthetizing the process"""
+        """Generate a random probable prime of *num_bits* bits."""
 
         bin_num = ""
 
@@ -89,7 +83,7 @@ class Rsa:
         return prime_number
 
     def euclide(self, f_int, s_int):
-        """Function for the algorithm of Euclide"""
+        """Compute gcd(*f_int*, *s_int*) using the Euclidean algorithm."""
 
         rest = f_int - s_int * (f_int // s_int)
 
@@ -101,7 +95,7 @@ class Rsa:
         return s_int
 
     def calculate_e(self, phi):
-        """Function to calculate e"""
+        """Choose a random integer *e* coprime with *phi* (Euler's totient)."""
 
         min_range = 1
         e_num = self.system_random.randint(min_range, phi)
@@ -112,7 +106,7 @@ class Rsa:
         return e_num
 
     def euclide_extended(self, f_num, s_num):
-        """Function for the algorithm of Euclide extended"""
+        """Compute the extended Euclidean algorithm, returning (gcd, x, y)."""
 
         rest, f_int, s_int, new_rest, new_f_int, new_s_int = f_num, 1, 0, s_num, 0, 1
 
@@ -125,7 +119,7 @@ class Rsa:
         return rest, f_int, s_int
 
     def encrypt_rsa(self):
-        """This function encrypt a text using the rsa method"""
+        """Encrypt a numeric message using an RSA public key (n, e)."""
 
         # Defining the differents levels of security
         min_secure = 512
@@ -208,7 +202,7 @@ class Rsa:
         print(" ".join([useful.color(text=str(encrypted_part), color="red") for encrypted_part in encrypted_mess]))
 
     def decrypt_rsa(self):
-        """This function decrypt a text encrypted by the transposition method"""
+        """Decrypt an RSA-encrypted numeric message using the private key (n, d)."""
 
         n_int = int(input("\nEnter value of " + useful.color(text="n", color="red") + " : "))
         d_int = int(input("Enter value of " + useful.color(text="d", color="red") + " : "))

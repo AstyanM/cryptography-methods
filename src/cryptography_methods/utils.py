@@ -1,23 +1,16 @@
-#! /usr/bin/env python3
-# coding: utf-8
-# pylint: disable=C0301, R0201
+"""Shared utilities for text processing, user interaction, and terminal output."""
 
-
-"""All imports"""
-
-
+from pathlib import Path
 from string import ascii_lowercase
 from functools import reduce
+
 from colorama import init, Fore, Style
 
-
-"""
-Useful Part
-"""
+_DATA_DIR = Path(__file__).resolve().parent / "data"
 
 
 class Useful:
-    """Class made to bring together a lot of useful functions for this program"""
+    """Utility class providing helpers for alphabet handling, user I/O, and text formatting."""
 
     def __init__(self):
 
@@ -26,12 +19,12 @@ class Useful:
         self.alpha = list(ascii_lowercase)
         self.alpha_bis = {"à": "a", "â": "a", "ä": "a", "é": "e", "è": "e", "ê": "e", "ù": "u", "ü": "u", "î": "i",
                           "ï": "i", "ç": "c", "ô": "o", "œ": "oe"}  # Letters that become without accent
-        self.languages = {"French": "Dicts/french_dict.txt",
-                          "English": "Dicts/english_dict.txt"}  # Differents possible languages
+        self.languages = {"French": str(_DATA_DIR / "french_dict.txt"),
+                          "English": str(_DATA_DIR / "english_dict.txt")}
         self.language_choices = {1: "French", 2: "English", 3: "Don't know"}
 
     def choice(self, to_print, choices_values=None, list_possible_values=None):
-        """This function helps the user to make a valid choice"""
+        """Prompt the user to make a valid choice from a numbered menu or a list of values."""
 
         if choices_values:
             print(to_print)
@@ -53,7 +46,7 @@ class Useful:
                 print("\nPlease enter a valid choice : ", end="")
 
     def see_if_language(self, encrypted_sentences, language=None):
-        """This function is watching if a text is corresponding to a language"""
+        """Check if decrypted text candidates match words from the specified language dictionary."""
 
         with open(self.languages[language], "r") as words:
 
@@ -84,7 +77,7 @@ class Useful:
             return possibilities
 
     def become_alpha(self, letter):
-        """This function return a valid letter"""
+        """Normalize a character to its lowercase ASCII equivalent, stripping accents."""
 
         letter = str(letter).lower()
 
@@ -95,7 +88,7 @@ class Useful:
         return ""
 
     def to_binary(self, text):
-        """This function is converting a sentence to binary"""
+        """Convert a text string to its binary representation."""
 
         for char in text:
             if char not in ["0", '1']:
@@ -104,7 +97,7 @@ class Useful:
         return text
 
     def color(self, text, color="white", style="normal", is_input=False):
-        """An editor of text to beautify the program"""
+        """Apply terminal color and style formatting to text using colorama."""
 
         color_map = {
             "black": Fore.BLACK,

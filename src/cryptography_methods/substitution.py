@@ -1,23 +1,17 @@
-#! /usr/bin/env python3
-# coding: utf-8
-# pylint: disable=C0301, R0201
-
-
-"""All imports"""
-
+"""Substitution cipher — encrypt and decrypt using a letter-for-letter mapping."""
 
 from copy import deepcopy
 from time import time
-from useful import useful
 
-
-"""
-Part III : Substitution
-"""
+from .utils import useful
 
 
 class Substitution:
-    """Class made to bring together the functions needed to encrypt and decrypt with Substitution method"""
+    """Encrypt and decrypt text using a mono-alphabetic substitution cipher.
+
+    Supports manual key entry for encryption and pattern-based dictionary
+    attack for decryption without a key.
+    """
 
     def __init__(self):
 
@@ -35,7 +29,7 @@ class Substitution:
             print("https://en.wikipedia.org/wiki/Substitution_cipher")
 
     def pattern(self, word):
-        """This function create the pattern of a word"""
+        """Compute the letter-repetition pattern of a word for dictionary matching."""
 
         substitute = Substitution()
 
@@ -57,7 +51,7 @@ class Substitution:
         return new_words
 
     def create_dictionnary(self, word1, word2):
-        """This function is creating a dictionnary between two words"""
+        """Build a substitution mapping between two words of equal length."""
 
         dico = {}
 
@@ -71,7 +65,7 @@ class Substitution:
                 dico[word2[word1.index(letter)]] = letter
 
     def encrypt_substitution(self, text=None, dico=None):
-        """This function encrypt a text by the substitution method"""
+        """Encrypt text by substituting each letter according to the given mapping."""
 
         my_alpha = deepcopy(useful.alpha)
         encrypted_text = ""
@@ -108,7 +102,7 @@ class Substitution:
         return encrypted_text
 
     def decrypt_substitution(self):
-        """This function decrypt a text encrypted by the substitution method"""
+        """Decrypt substitution-encrypted text using a known key or pattern-based attack."""
 
         # Defining the text to decrypt
         text = input(useful.color(text="Enter the text to decrypt :\n", style="bright", is_input=True)).lower()
